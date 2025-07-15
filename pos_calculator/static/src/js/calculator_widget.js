@@ -9,6 +9,9 @@ import { ControlButtons } from "@point_of_sale/app/screens/product_screen/contro
 
 export class CalculatorWidget extends Component {
     static template = "calculator_in_pos.CalculatorWidget";
+    static props = {
+        onClose: Function,
+    };
 
     setup() {
         this.pos = usePos();
