@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+  <t t-name="hostel.room_snippet_data">
+    <section class="rooms_section">
+      <div class="container">
+        <br/>
+        <h3 class="section_heading">Latest Rooms</h3>
+      </div>
+      <div class="carousel carousel-dark slide room-carousel" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <t t-foreach="chunks" t-as="chunk" t-key="chunk_index">
+            <t t-if="chunk_index == 0">
+              <div class="carousel-item active">
+                <div class="container">
+                  <div class="row">
+                    <t t-foreach="chunk" t-as="room" t-key="room_index">
+                      <div class="col-md-3">
+                        <div class="card mb-4 shadow-lg border-0 rounded-4">
+                          <t t-if="room.image">
+                            <img t-att-src="'data:image/png;base64,' + room.image"
+                                 class="card-img-top"
+                                 style="height: 200px; object-fit: cover;"
+                                 t-att-alt="room.number"/>
+                          </t>
+                          <t t-else="">
+                            <img src="/hostel/static/src/img/snippets/hostel_room.jpg"
+                                 class="card-img-top"
+                                 style="height: 200px; object-fit: cover;"
+                                 alt="Default Room"/>
+                          </t>
+                          <div class="card-body">
+                            <h5 class="card-title" t-esc="room.number"/>
+                          </div>
+                          <div class="card-footer">
+                            <a t-att-href="'/room/' + room.id" class="btn btn-primary mt-2">
+                              View Details
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </t>
+                  </div>
+                </div>
+              </div>
+            </t>
+            <t t-else="">
+              <div class="carousel-item">
+                <div class="container">
+                  <div class="row">
+                    <t t-foreach="chunk" t-as="room" t-key="room_index">
+                      <div class="col-md-3">
+                        <div class="card mb-4 shadow-lg border-0 rounded-4">
+                          <t t-if="room.image">
+                            <img t-att-src="'data:image/png;base64,' + room.image"
+                                 class="card-img-top"
+                                 style="height: 200px; object-fit: cover;"
+                                 t-att-alt="room.number"/>
+                          </t>
+                          <t t-else="">
+                            <img src="/hostel/static/src/img/snippets/hostel_room.jpg"
+                                 class="card-img-top"
+                                 style="height: 200px; object-fit: cover;"
+                                 alt="Default Room"/>
+                          </t>
+                          <div class="card-body">
+                            <h5 class="card-title" t-esc="room.number"/>
+                          </div>
+                          <div class="card-footer">
+                            <a t-att-href="'/room/' + room.id" class="btn btn-primary mt-2">
+                              View Details
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </t>
+                  </div>
+                </div>
+              </div>
+            </t>
+          </t>
+        </div>
+        <button class="carousel-control-prev" type="button" onclick="$(this).closest('.room-carousel').carousel('prev')">
+          <span class="oi oi-chevron-left me-md-n4 rounded-pill p-3 bg-700" aria-hidden="true"/>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" onclick="$(this).closest('.room-carousel').carousel('next')">
+          <span class="oi oi-chevron-right me-md-n4 rounded-pill p-3 bg-700" aria-hidden="true"/>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </section>
+  </t>
+</templates>

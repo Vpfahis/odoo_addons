@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem
+        id = "school_menu_root"
+        name="School"
+        web_icon="school,static/description/icon.png"
+        sequence ="10"/>
+    <menuitem
+        id = "school_student_menu"
+        name= "Student"
+        parent = "school_menu_root"
+        action = "action_school_student"
+        sequence="10"/>
+    <menuitem
+        id = "school_faculty_menu"
+        name = "Faculty"
+        parent = "school_menu_root"
+        action="action_school_faculty"
+        sequence="10"/>
+    <menuitem
+        id = "school_class_menu"
+        name = "Class"
+        parent = "school_menu_root"
+        action = "action_school_class"
+        sequence = "10"/>
+    <menuitem
+        id = "school_subject_menu"
+        name = "Subject"
+        parent = "school_menu_root"
+        action = "action_school_subject"
+        sequence = "10"/>
+
+</odoo>

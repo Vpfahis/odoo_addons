@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="action_estate_property" model="ir.actions.act_window">
+        <field name="name">Estate Property</field>
+        <field name="res_model">real_estate_order</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_estate_property_list" model="ir.ui.view">
+        <field name="name">real_estate_order.list</field>
+        <field name="model">real_estate_order</field>
+        <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="expected_price"/>
+                <field name="selling_price"/>
+                <field name="state"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+
+<record id="view_estate_property_form" model="ir.ui.view">
+    <field name="name">real_estate_order.form</field>
+    <field name="model">real_estate_order</field>
+    <field name="arch" type="xml">
+        <form string="Estate Property">
+            <sheet>
+                <group>
+                    <group col="6">
+                        <field name="name"/>
+                        <field name="description"/>
+                    </group>
+
+                </group>
+                <group>
+                    <group col="6">
+                        <field name="property_type"/>
+                        <field name="postcode"/>
+                        <field name="expected_price"/>
+                    </group>
+                    <group col="6">
+                        <field name="date_availability"/>
+                        <field name="selling_price"/>
+                    </group>
+                </group>
+
+                <notebook>
+                    <page string="Description">
+                        <group>widget="many2many_tags"
+                    <group col="6">
+                        <field name="bedrooms"/>
+                    </group>
+                    <group col="6">
+                        <field name="living_area"/>
+                    </group>
+                </group>
+                <group>
+                    <group col="6">
+                        <field name="facades" widget="range_slider"/>
+                    </group>
+                    <group col="6">
+                        <field name="garage"/>
+                    </group>
+                </group>
+                <group>
+                    <group col="6">
+                        <field name="garden"/>
+                    </group>
+                    <group col="6">
+                        <field name="garden_area"/>
+                    </group>
+                    <group col="6">
+                        <field name="garden_orientation"/>
+                    </group>
+                </group>
+                <group>
+                    <group col="6">
+                        <field name="state"/>
+                    </group>
+                    <group col="6">
+                        <field name="active"/>
+                        <field name="total_area"/>
+                    </group>
+                </group>
+                    </page>
+                    <page string = "Other Info">
+                        <group>
+                            <field name="sales_man"/>
+                            <field name="buyer"/>
+                        </group>
+                    </page>
+                </notebook>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+    <record id="real_estate_view_search" model="ir.ui.view">
+        <field name="name">real_estate_order.search</field>
+        <field name="model">real_estate_order</field>
+        <field name="arch" type="xml">
+        <search>
+           <field name="name"/>
+           <field name="postcode"/>
+            <filter string="Available" name="state" domain="[('state', 'in', ['new','offer'])]"/>
+            <filter string="NotActive" name="active" domain="[('active', '=', False)]"/>
+            <group expand="0" string="Group By">
+               <filter string="Postcode" name="postcode" context="{'group_by': 'postcode'}"/>
+           </group>
+        </search>
+        </field>
+    </record>
+
+</odoo>

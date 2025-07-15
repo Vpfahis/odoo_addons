@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="menu_student_registration" model="website.menu">
+        <field name="name">Student Registration</field>
+        <field name="url">/student_registration</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">60</field>
+    </record>
+
+    <template id="student_register_template" name="Student Registration">
+        <t t-call="website.layout">
+            <div class="oe_structure oe_empty">
+            <section class="s_title parallax s_parallax_is_fixed bg-black-50 pt24 pb24" data-vcss="001" data-snippet="s_title" data-scroll-background-ratio="1">
+                    <span class="s_parallax_bg oe_img_bg" style="background-image: url('/web/image/website.s_parallax_default_image'); background-position: 50% 0;"/>
+                    <div class="o_we_bg_filter bg-black-50"/>
+
+                    <div class="container">
+                        <h1>Student Registration Form</h1>
+                    </div>
+            </section><br/></div>
+            <div class="container py-5">
+                <t t-if="error">
+                    <div class="alert alert-danger"><t t-esc="error"/></div>
+                </t>
+                <form action="/student/register/submit" method="post" class="row g-3">
+                    <div class="col-md-6">
+                        <label>Name</label>
+                        <span class="s_website_form_mark" style="color:red"> *</span>
+                        <input type="text" name="name" required="required" class="form-control"
+                          t-att-value="form_data.get('name') if form_data else ''"/>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Email</label>
+                        <span class="s_website_form_mark" style="color:red"> *</span>
+                        <input type="email" name="email" required="required" class="form-control"
+                          t-att-value="form_data.get('email') if form_data else ''"/>
+                    </div>
+                    <div class="col-md-6">
+                        <label>DOB</label>
+                        <span class="s_website_form_mark" style="color:red"> *</span>
+                        <input type="date" required="required" name="dob" class="form-control"
+                          t-att-value="form_data.get('dob') if form_data else ''"/>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Select Room</label>
+                        <span class="s_website_form_mark" style="color:red"> *</span>
+                        <select name="room_id" required="required" class="form-select">
+                            <option value="">-- Select --</option>
+                            <t t-set="selected_room" t-value="form_data.get('room_id') if form_data else None"/>
+                            <t t-foreach="rooms" t-as="room">
+                                <option t-att-value="room.id"
+                                        t-att-selected="room.id == selected_room and 'selected' or None">
+                                    <t t-esc="room.number"/> (Available Beds: <t t-esc="room.available_bed"/>)
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </div>
+                </form>
+            </div>
+        </t>
+    </template>
+
+    <template id="student_register_success" name="Registration Success">
+        <t t-call="website.layout">
+            <div class="container py-5">
+                <div class="alert alert-success">
+                    <h4>Thank you,  The Student <t t-esc="student.name"/> has been registered!</h4>
+                </div>
+                <a href="/student_registration" class="btn btn-secondary">Back</a>
+            </div>
+        </t>
+    </template>
+
+</odoo>

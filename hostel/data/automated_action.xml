@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Server Action -->
+    <record id="action_student_create_user_action" model="ir.actions.server">
+      <field name="name">Create User on Student Creation</field>
+      <field name="model_id" ref="hostel.model_hostel_student"/>
+      <field name="state">code</field>
+      <field name="code">record.action_create_user()</field>
+    </record>
+    <!-- Automated Action -->
+    <record id="automated_action_student_create_user_action" model="base.automation">
+      <field name="name">Create User on Student Creation</field>
+      <field name="model_id" ref="hostel.model_hostel_student"/>
+      <field name="trigger">on_create</field>
+      <field name="action_server_ids" eval="[(4, ref('action_student_create_user_action'))]"/>
+    </record>
+
+</odoo>

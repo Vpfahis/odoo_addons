@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_payment_provider_cash_on_delivery_form" model="ir.ui.view">
+        <field name="name">payment.provider.form.cash_on_delivery</field>
+        <field name="model">payment.provider</field>
+        <field name="inherit_id" ref="payment.payment_provider_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='credentials']" position="attributes">
+                <attribute name="invisible">code == 'cash_on_delivery'</attribute>
+            </xpath>
+            <xpath expr="//group[@name='payment_followup']" position="after">
+                <group string="COD Charge Rules" name="charges" invisible="not code == 'c_o_d'">
+                    <field name="cod_charge_ids">
+                        <list editable="bottom">
+                            <field name="min_total"/>
+                            <field name="max_total"/>
+                            <field name="charge"/>
+                            <field name="currency_id"/>
+                        </list>
+                    </field>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

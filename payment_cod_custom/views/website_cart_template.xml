@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="website_sale_cod_charge" inherit_id="website_sale.total" priority="20">
+        <xpath expr="//tr[contains(@class,'total')]" position="before">
+            <tr t-if="website_sale_order.cod_extra_charge" class="cod-charge-row">
+                <td colspan="4" class="text-end">
+                    <strong>COD Extra Charge:</strong>
+                </td>
+                <td class="text-end">
+                    <span t-field="website_sale_order.cod_extra_charge"
+                          t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}"/>
+                </td>
+            </tr>
+        </xpath>
+    </template>
+
+    <!-- Payment form template for COD -->
+    <template id="cod_payment_form" name="COD Payment Form">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Cash on Delivery</h5>
+                <p class="card-text">
+                    You will pay for your order when it is delivered to your address.
+                </p>
+                <div t-if="cod_extra_charge" class="alert alert-info">
+                    <strong>COD Extra Charge: </strong>
+                    <span t-esc="cod_extra_charge" t-options="{'widget': 'monetary'}"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" required="required"/>
+                        I agree to pay the amount due upon delivery
+                    </label>
+                </div>
+            </div>
+        </div>
+    </template>
+</odoo>

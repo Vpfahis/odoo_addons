@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem
+        id = "hostel_menu_root"
+        name="Hostel Management"
+        web_icon="hostel,static/description/icon.png"
+        sequence ="10"/>
+    <menuitem
+        id = "hostel_room_menu"
+        name="Room"
+        parent ="hostel_menu_root"
+        action = "action_hostel_room"
+        groups = "hostel.group_hostel_admin,hostel.group_hostel_warden,hostel.group_hostel_student"
+        sequence="10"/>
+    <menuitem
+        id = "hostel_student_menu"
+        name = "Student"
+        parent="hostel_menu_root"
+        action="action_hostel_student"
+        sequence="10"/>
+    <menuitem
+        id ="hostel_facility_menu"
+        name = "Facility"
+        parent = "hostel_menu_root"
+        action = "action_hostel_facility"
+        groups = "hostel.group_hostel_admin,hostel.group_hostel_warden"
+        sequence="10"/>
+    <menuitem
+        id="hostel_student_leave_menu"
+        name="Leave"
+        parent="hostel_menu_root"
+        action="action_hostel_student_leave"
+        sequence="10"/>
+    <menuitem
+        id="hostel_student_cleaning_service_menu"
+        name="Cleaning Service"
+        parent="hostel_menu_root"
+        action="action_hostel_cleaning_service"
+        sequence="10"/>
+    <menuitem
+        id="hostel_reporting"
+        name="Reporting"
+        parent="hostel_menu_root"
+        sequence="10"/>
+    <menuitem
+        id="hostel_student_report"
+        name="Student Report"
+        parent="hostel_reporting"
+        action="action_student_report_wizard"/>
+    <menuitem
+        id="hostel_student_leave_report"
+        name="Leave Report"
+        parent="hostel_reporting"
+        action="action_leave_report_wizard"/>
+
+</odoo>

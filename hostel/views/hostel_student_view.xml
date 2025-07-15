@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="action_hostel_student" model="ir.actions.act_window">
+        <field name="name">Student</field>
+        <field name="res_model">hostel.student</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_hostel_student_list" model="ir.ui.view">
+        <field name="name">hostel_student.list</field>
+        <field name="model">hostel.student</field>
+        <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" decoration-bf="1"/>
+                <field name="student_id"/>
+                <field name="room"/>
+                <field name="payment_state_stored" widget="badge" decoration-success="payment_state == 'done'" decoration-danger="payment_state == 'pending'" />
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hostel_student_form" model="ir.ui.view">
+        <field name="name">hostel_student.form</field>
+        <field name="model">hostel.student</field>
+        <field name="arch" type="xml">
+            <form string="Student">
+                 <header>
+                     <button name="action_alot_room" string="Alot Room" type="object" class="btn-primary" groups = "hostel.group_hostel_admin,hostel.group_hostel_warden"/>
+                     <button name="action_vacate_room" string="Vacate Room" type="object" class="btn-primary" groups = "hostel.group_hostel_admin,hostel.group_hostel_warden"/>
+                 </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_button_box" name="button_box">
+                        <button type="object" name="action_view_student_invoices" class="oe_stat_button" icon="fa-pencil-square-o">
+                            <field string="Invoices" name="invoice_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group col="1">
+                            <field name="name"/>
+                            <field name="student_id" style="font-size:15px"/>
+                        </group>
+                        <group col="1">
+                            <field name='image' widget="image" class="oe_avatar" nolabel="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group col="1">
+                            <field name="dob" help="Date of Birth."/>
+                            <field name="room" readonly="1"/>
+                            <field name="age"/>
+                            <field name="monthly_amount" widget="monetary"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group col="1">
+                            <field name="email" widget="email"/>
+                            <field name="receive_mail" help="Enable if you want to receive mail"/>
+                            <field name="partner_id"/>
+                            <field name="user_id"/>
+                            <field name="payment_state" readonly="1" invisible="1"/>
+                            <field name="payment_state_stored" readonly="1" invisible="1"/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Address">
+                                <group string="Contact Address">
+                                    <group col="1">
+                                        <field name="street" placeholder="Street..." />
+                                        <field name="street2" placeholder="Street 2..." />
+                                        <field name="city" placeholder="City" />
+                                    </group>
+                                    <group col="1">
+                                        <field name="state_id" placeholder="State" />
+                                        <field name="zip" placeholder="ZIP" />
+                                        <field name="country_id" placeholder="Country"/>
+                                    </group>
+                                </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hostel_student_view_search" model="ir.ui.view">
+        <field name="name">hostel_student.search</field>
+        <field name="model">hostel.student</field>
+        <field name="arch" type="xml">
+        <search>
+            <filter string="Archived" name="active" domain="[('active', '=', False)]"/>
+            <group expand="0" string="Group By">
+                <filter string="Room" name="room" context="{'group_by': 'room'}"/>
+                <filter string="Country" name="country_id" context="{'group_by': 'country_id'}"/>
+           </group>
+        </search>
+        </field>
+    </record>
+
+</odoo>

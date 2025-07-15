@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="action_school_faculty" model="ir.actions.act_window">
+        <field name="name">Faculty</field>
+        <field name="res_model">school.faculty</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_school_faculty_list" model="ir.ui.view">
+        <field name="name">school_faculty.list</field>
+        <field name="model">school.faculty</field>
+        <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="faculty_phone"/>
+            </list>
+        </field>
+    </record>
+
+
+</odoo>

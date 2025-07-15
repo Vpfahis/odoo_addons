@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!-- Extend ControlButtons to add calculator button -->
+    <t t-name="point_of_sale.ControlButtons" t-inherit="point_of_sale.ControlButtons" t-inherit-mode="extension">
+        <xpath expr="//OrderlineNoteButton" position="after">
+            <!-- Only show calculator button if enabled in POS config -->
+            <t t-if="pos.config.enable_calculator">
+                <button class="btn btn-light me-2 btn-lg calculator-control-btn" t-on-click="() => this.onClickCalculator()">
+                    <i class="fa fa-calculator me-1" role="img" aria-label="Calculator" title="Calculator"/>
+                    Calculator
+                </button>
+
+                <!-- Add calculator widget right after the button -->
+                <CalculatorWidget t-if="calculatorState.showCalculator" onClose="() => this.onCloseCalculator()"/>
+            </t>
+        </xpath>
+    </t>
+
+    <!-- Main Calculator Widget Template -->
+    <t t-name="calculator_in_pos.CalculatorWidget">
+        <div class="calculator-overlay">
+            <div class="calculator-container">
+                <!-- Header -->
+                <div class="calculator-header">
+                    <h4>
+                        <i class="fa fa-calculator"></i>
+                        Calculator
+                    </h4>
+                    <button class="btn btn-sm btn-secondary calculator-close" t-on-click="closeCalculator">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+
+                <!-- Display -->
+                <div class="calculator-display">
+                    <!-- Operation History -->
+<!--                    <div class="calculator-history" t-if="state.operationHistory">-->
+<!--                        <small class="text-muted" t-esc="state.operationHistory"/>-->
+<!--                    </div>-->
+
+                    <!-- Main Display -->
+                    <input type="text" class="form-control calculator-screen" t-att-value="state.display" readonly="readonly"/>
+<!--                    <button class="btn btn-sm btn-info calculator-copy" t-on-click="copyToClipboard" title="Copy to clipboard">-->
+<!--                        <i class="fa fa-copy"></i>-->
+<!--                    </button>-->
+                </div>
+
+                <!-- Button Grid -->
+                <div class="calculator-buttons">
+                    <!-- Row 1 -->
+                    <div class="calculator-row">
+                        <button class="btn btn-danger calculator-btn" t-on-click="clear">Clear</button>
+                        <button class="btn btn-secondary calculator-btn" t-on-click="backspace">⌫</button>
+                        <button class="btn btn-info calculator-btn" t-on-click="() => this.performOperation('÷')">÷</button>
+                    </div>
+
+                    <!-- Row 2 -->
+                    <div class="calculator-row">
+                        <button class="btn btn-light calculator-btn" t-on-click="() => this.inputNumber(7)">7</button>
+                        <button class="btn btn-light calculator-btn" t-on-click="() => this.inputNumber(8)">8</button>
+                        <button class="btn btn-light calculator-btn" t-on-click="() => this.inputNumber(9)">9</button>
+                        <button class="btn btn-info calculator-btn" t-on-click="() => this.performOperation('×')">×</button>
+                    </div>
+
+                    <!-- Row 3 -->
+                    <div class="calculator-row">
+                        <button class="btn btn-light calculator-btn" t-on-click="() => this.inputNumber(4)">4</button>
+                        <button class="btn btn-light calculator-btn" t-on-click="() => this.inputNumber(5)">5</button>
+                        <button class="btn btn-light calculator-btn" t-on-click="() => this.inputNumber(6)">6</button>
+                        <button class="btn btn-info calculator-btn" t-on-click="() => this.performOperation('-')">-</button>
+                    </div>
+
+                    <!-- Row 4 -->
+                    <div class="calculator-row">
+                        <button class="btn btn-light calculator-btn" t-on-click="() => this.inputNumber(1)">1</button>
+                        <button class="btn btn-light calculator-btn" t-on-click="() => this.inputNumber(2)">2</button>
+                        <button class="btn btn-light calculator-btn" t-on-click="() => this.inputNumber(3)">3</button>
+                        <button class="btn btn-info calculator-btn" t-on-click="() => this.performOperation('+')">+</button>
+                    </div>
+
+                    <!-- Row 5 -->
+                    <div class="calculator-row">
+                        <button class="btn btn-light calculator-btn calculator-zero" t-on-click="() => this.inputNumber(0)">0</button>
+                        <button class="btn btn-light calculator-btn" t-on-click="inputDecimal">.</button>
+                        <button class="btn btn-success calculator-btn" t-on-click="equals">=</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

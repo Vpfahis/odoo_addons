@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="action_hostel_room" model="ir.actions.act_window">
+        <field name="name">Room</field>
+        <field name="res_model">hostel.room</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_hostel_room_list" model="ir.ui.view">
+        <field name="name">hostel_room.list</field>
+        <field name="model">hostel.room</field>
+        <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="number" width="400px" decoration-bf="1"/>
+                <field name="room_type" width="400px"/>
+                <field name="num_bed"/>
+                <field name="available_bed"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hostel_room_form" model="ir.ui.view">
+        <field name="name">hostel_room.form</field>
+        <field name="model">hostel.room</field>
+        <field name="arch" type="xml">
+            <form string="Room">
+                <header>
+                    <button name="action_monthly_invoice" string="Monthly Invoice" type="object" class="btn-primary" groups = "hostel.group_hostel_admin,hostel.group_hostel_warden"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group col="1">
+                            <field name="number" readonly="1"  style="font-size:20px"/>
+                        </group>
+                        <group col="1">
+                            <field name='image' widget="image" class="oe_avatar" nolabel="1"/>
+
+                        </group>
+                    </group>
+                    <group>
+                        <group col="1">
+                            <field name="room_type"/>
+                            <field name="rent" widget="monetary"/>
+                            <field name="total_rent" widget="monetary"/>
+                            <field name="pending_amount" widget="monetary"/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                        <group col="1">
+                            <field name="num_bed" />
+                            <field name="available_bed" readonly="1"/>
+                            <field name="facility_ids" widget="many2many_tags"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Students">
+                            <field name="student_ids" readonly="1"/>
+                        </page>
+                        <page string="Description">
+                            <field name="description"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="hostel_room_view_search" model="ir.ui.view">
+        <field name="name">hostel_room.search</field>
+        <field name="model">hostel.room</field>
+        <field name="arch" type="xml">
+        <search>
+            <filter string="Available Room" name="state" domain="[('state', 'in', ['empty','partial'])]"/>
+            <group expand="0" string="Group By">
+               <filter string="Bed Count" name="num_bed" context="{'group_by': 'num_bed'}"/>
+           </group>
+        </search>
+        </field>
+    </record>
+
+</odoo>

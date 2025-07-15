@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Multi company restriction -->
+
+    <!-- Student model company restriction -->
+    <record model="ir.rule" id="record_not_shared_student_model">
+        <field name="name">Non Shared Records Student</field>
+        <field name="model_id" ref="hostel.model_hostel_student"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">
+            [('company_id', 'in', company_ids)]
+        </field>
+    </record>
+
+    <!-- Room model company restriction -->
+    <record model="ir.rule" id="record_not_shared_room_model">
+        <field name="name">Non Shared Records Room</field>
+        <field name="model_id" ref="hostel.model_hostel_room"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">
+            [('company_id', 'in', company_ids)]
+        </field>
+    </record>
+
+    <!-- Facility model company restriction -->
+    <record model="ir.rule" id="record_not_shared_facility_model">
+        <field name="name">Non Shared Records Facility</field>
+        <field name="model_id" ref="hostel.model_hostel_facility"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">
+            [('company_id', 'in', company_ids)]
+        </field>
+    </record>
+
+    <!-- Leave model company restriction -->
+    <record model="ir.rule" id="record_not_shared_leave_model">
+        <field name="name">Non Shared Records Leave</field>
+        <field name="model_id" ref="hostel.model_hostel_student_leave"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">
+            [('company_id', 'in', company_ids)]
+        </field>
+    </record>
+
+    <!-- Cleaning model company restriction -->
+    <record model="ir.rule" id="record_not_shared_cleaning_model">
+        <field name="name">Non Shared Records Cleaning</field>
+        <field name="model_id" ref="hostel.model_hostel_cleaning_service"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">
+            [('company_id', 'in', company_ids)]
+        </field>
+    </record>
+
+    <!-- User Groups -->
+    <record id="module_category_hostel" model="ir.module.category">
+        <field name="name">Hostel</field>
+        <field name="sequence">5</field>
+    </record>
+
+    <record id="group_hostel_admin" model="res.groups">
+        <field name="name">Admin</field>
+        <field name="category_id" ref="hostel.module_category_hostel"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">Access to everything</field>
+    </record>
+
+    <record id="group_hostel_warden" model="res.groups">
+        <field name="name">Warden</field>
+        <field name="category_id" ref="hostel.module_category_hostel"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">Access to everything except creation of leave request</field>
+    </record>
+
+    <record id="group_hostel_student" model="res.groups">
+        <field name="name">Student</field>
+        <field name="category_id" ref="hostel.module_category_hostel"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">Access to their documents and creation of leave request</field>
+    </record>
+
+    <record id="group_hostel_staff" model="res.groups">
+        <field name="name">Staff</field>
+        <field name="category_id" ref="hostel.module_category_hostel"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">Can only See their cleaning request</field>
+    </record>
+
+    <!-- Record rules -->
+    <record id="hostel_student_own_record_rule" model="ir.rule">
+        <field name="name">Student can only access their own Record</field>
+        <field name="model_id" ref="model_hostel_student"/>
+        <field name="domain_force">[('user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('hostel.group_hostel_student'))]"/>
+    </record>
+
+    <record id="hostel_student_room_rule" model="ir.rule">
+        <field name="name">Student can only access their room</field>
+        <field name="model_id" ref="hostel.model_hostel_room"/>
+        <field name="domain_force">[('id', '=', user.student_id.room.id)]</field>
+        <field name="groups" eval="[(4, ref('hostel.group_hostel_student'))]"/>
+    </record>
+
+    <record id="hostel_student_leave_rule" model="ir.rule">
+        <field name="name">Student can only access their own leave requests</field>
+        <field name="model_id" ref="hostel.model_hostel_student_leave"/>
+        <field name="domain_force">[('student_id', '=', user.student_id.id)]</field>
+        <field name="groups" eval="[(4, ref('hostel.group_hostel_student'))]"/>
+    </record>
+
+    <record id="hostel_cleaning_service_user_rule" model="ir.rule">
+        <field name="name">Cleaning Requests,Own and Unassigned Requests</field>
+        <field name="model_id" ref="model_hostel_cleaning_service"/>
+        <field name="domain_force">['|', ('cleaning_staff', '=', user.id), ('cleaning_staff', '=', False)]</field>
+        <field name="groups" eval="[(4, ref('hostel.group_hostel_staff'))]"/>
+    </record>
+
+    <record id="hostel_cleaning_service_rule_warden" model="ir.rule">
+        <field name="name">Cleaning Requests: Warden Full Access</field>
+        <field name="model_id" ref="model_hostel_cleaning_service"/>
+        <field name="domain_force">[]</field>
+        <field name="groups" eval="[(4, ref('hostel.group_hostel_warden'))]"/>
+    </record>
+
+    <record id="hostel_cleaning_service_rule_admin" model="ir.rule">
+        <field name="name">Cleaning Requests: Admin Full Access</field>
+        <field name="model_id" ref="model_hostel_cleaning_service"/>
+        <field name="domain_force">[]</field>
+        <field name="groups" eval="[(4, ref('hostel.group_hostel_admin'))]"/>
+    </record>
+</odoo>

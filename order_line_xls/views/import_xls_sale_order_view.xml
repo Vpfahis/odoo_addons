@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_order_form_inherit_import" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.import</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button name="action_open_import_wizard"
+                        type="object"
+                        string="Import Order Lines"
+                        class="oe_highlight"
+                        invisible="state != 'draft'"/>
+            </header>
+        </field>
+    </record>
+</odoo>

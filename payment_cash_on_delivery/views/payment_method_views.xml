@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="add_charges_method_form" inherit_id="payment.method_form">
+        <xpath expr="//input[@name='o_payment_radio']" position="attributes">
+            <t t-if="provider_sudo.code == 'cash_on_delivery'">
+                <attribute name="data-cod-provider">1</attribute>
+            </t>
+        </xpath>
+    </template>
+</odoo>

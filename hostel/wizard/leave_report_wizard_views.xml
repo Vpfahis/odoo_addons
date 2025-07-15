@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_student_leave_report_wizard" model="ir.ui.view">
+        <field name="name">leave.report.wizard.form</field>
+        <field name="model">leave.report</field>
+        <field name="arch" type="xml">
+            <form string="Student Leave Report">
+                <group>
+                    <group>
+                        <field name="room_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                        <field name="leave_date"/>
+                    </group>
+                    <group>
+                        <field name="student_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                         <field name="arrival_date"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="print_leave_report" type="object" string="Print PDF" class="btn-primary"/>
+                    <button name="print_xlsx_leave_report" type="object" string="Print XLSX" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_leave_report_wizard" model="ir.actions.act_window">
+        <field name="name">Leave Report</field>
+        <field name="res_model">leave.report</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

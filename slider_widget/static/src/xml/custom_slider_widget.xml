@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-name="FieldRangeSlider" owl="1">
+    <div class="slidecontainer d-flex align-items-center gap-2" style="max-width: 260px;">
+      <input type="range"
+             class="form-range"
+             t-att-min="state.min"
+             t-att-max="state.max"
+             t-att-step="state.step"
+             t-att-value="state.value"
+             t-on-input="getValue"/>
+
+      <span class="badge rounded-pill text-black"
+            style="background-color: #e6dddd; min-width: 40px; text-align: center;">
+        <t t-esc="state.value"/>
+      </span>
+    </div>
+  </t>
+</templates>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="ProductCard" t-inherit="point_of_sale.ProductCard" t-inherit-mode="extension">
+        <xpath expr="//article" position="inside">
+            <t t-if="env.services.pos.config.quantity_location">
+                <div class="product-qty inline position-absolute p-2">
+                    <span
+                        t-att-title="props.product.qty_per_location_tooltip"
+                        class="qty-badge badge badge-info"
+                        style="color: white; background: #71629e; padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: bold; margin-left: 4px; display: inline-block;">
+                        Qty: <t t-esc="props.product.quantity_available"/>
+                    </span>
+                </div>
+            </t>
+        </xpath>
+    </t>
+</templates>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="student_report_action_pdf" model="ir.actions.report">
+        <field name="name">Student Report</field>
+        <field name="model">student.report</field> <!-- or use 'student.report' if it's based on the wizard -->
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hostel.student_report_template</field>
+        <field name="report_file">hostel.student_report_template</field>
+        <field name="print_report_name">'Student Report'</field>
+    </record>
+
+     <record id="leave_report_action_pdf" model="ir.actions.report">
+        <field name="name">Leave Report</field>
+        <field name="model">leave.report</field> <!-- or use 'student.report' if it's based on the wizard -->
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hostel.leave_report_template</field>
+        <field name="report_file">hostel.leave_report_template</field>
+        <field name="print_report_name">'Leave Report'</field>
+    </record>
+</odoo>

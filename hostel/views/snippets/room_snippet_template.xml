@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="room_snippet_template" name="Latest Room">
+        <section class="rooms_section">
+          <div class="container">
+            <div class="alert alert-info">
+              <h4>Your Room Highlight snippet will be displayed here...
+                Please save to view the snippet
+              </h4>
+            </div>
+          </div>
+        </section>
+    </template>
+
+    <template id="room_snippet" inherit_id="website.snippets" name="Latest Rooms Snippet">
+        <xpath expr="//snippets[@id='snippet_groups']" position="inside">
+            <t t-snippet="hostel.room_snippet_template" t-thumbnail="/hostel/static/src/img/snippets/hostel_room.jpg"/>
+        </xpath>
+    </template>
+
+    <template id="room_detail_template" name="Room Detail Page">
+    <t t-call="website.layout">
+        <div class="container my-5">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="row g-0">
+                    <div class="col-lg-5">
+                        <div class="h-100 w-100">
+                            <t t-if="room.image">
+                                <img t-att-src="'data:image/png;base64,' + room.image"
+                                     class="img-fluid rounded-start-4 h-100 object-fit-cover"
+                                     t-att-alt="room.number" />
+                            </t>
+                            <t t-else="">
+                                <img src="/hostel/static/src/img/snippets/hostel_room.jpg"
+                                     alt="Default Room Image"
+                                     class="img-fluid rounded-start-4 h-100 object-fit-cover"/>
+                            </t>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-7 p-4">
+                        <h2 class="fw-bold text-primary"><t t-esc="room.number"/></h2><hr/>
+
+                        <p class="fst-italic text-muted" style="font-size: 16px;">
+                            <t t-esc="room.description"/>
+                        </p>
+                        <hr/>
+                        <p>
+                            <i class="fa fa-bed me-2"></i>
+                            <strong>Beds:</strong> <span class="badge bg-light text-dark"><t t-esc="room.num_bed"/></span>
+                        </p>
+                        <p>
+                            <i class="fa fa-money me-2"></i>
+                            <strong>Rent:</strong>
+                            <span class="badge bg-warning text-dark">
+                                <t t-esc="room.total_rent"/> <t t-esc="room.currency_id.symbol"/>
+                            </span>
+                        </p>
+                        <p>
+                            <i class="fa fa-cogs me-2"></i>
+                            <strong>Facilities:</strong>
+                            <t t-if="room.facility_ids">
+                                <t t-foreach="room.facility_ids" t-as="facility" t-key="facility.id">
+                                    <span class="badge bg-success me-1 mb-1"><t t-esc="facility.name"/></span>
+                                </t>
+                            </t>
+                            <t t-if="not room.facility_ids">
+                                <span class="badge bg-secondary">None</span>
+                            </t>
+                        </p><hr/>
+                        <div class="d-flex justify-content-between align-items-end mb-3">
+                            <h2></h2>
+                            <a href="/" class="btn btn-outline-secondary rounded-pill">
+                                <i class="fa fa-arrow-circle-o-left"></i> Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</template>
+
+</odoo>

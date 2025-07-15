@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+  <template id="student_report_template">
+  <t t-call="web.html_container">
+    <t t-call="web.external_layout">
+
+      <t t-set="student_id" t-value="student_id"/>
+      <t t-set="room_id" t-value="room_id"/>
+
+      <h2 style="text-align:center;">Students Report</h2>
+
+      <p>
+        <strong>Printed Date:</strong>
+        <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M:%S')"/>
+      </p>
+
+      <t t-if="student_id">
+        <p><strong>Student:</strong> <span t-esc="env['hostel.student'].browse(student_id).name"/></p>
+      </t>
+      <t t-if="room_id">
+        <p><strong>Room:</strong> <span t-esc="env['hostel.room'].browse(room_id).number"/></p>
+      </t>
+
+      <table class="table" style="width: 100%; margin-top: 20px;">
+        <thead>
+          <tr>
+            <t t-if="not student_id"><th><strong>SL.No</strong></th></t>
+            <t t-if="not student_id"><th><strong>Name</strong></th></t>
+            <t t-if="not room_id"><th><strong>Room</strong></th></t>
+            <th><strong>Pending Amount</strong></th>
+            <th><strong>Invoice Status</strong></th>
+          </tr>
+        </thead>
+        <tbody>
+          <t t-set="counter" t-value="0"/>
+          <t t-foreach="docs" t-as="student">
+            <t t-set="counter" t-value="counter + 1"/>
+            <tr>
+              <t t-if="not student_id"><td><t t-esc="counter"/></td></t>
+              <t t-if="not student_id"><td><t t-esc="student['name']"/></td></t>
+              <t t-if="not room_id"><td><t t-esc="student['room_name'] or ''"/></td></t>
+              <td><t t-esc="student['pending_amount']"/></td>
+              <td><t t-esc="student['payment_state']"/></td>
+            </tr>
+          </t>
+        </tbody>
+      </table>
+    </t>
+  </t>
+  </template>
+
+ <template id="leave_report_template">
+    <t t-call="web.html_container">
+      <t t-call="web.external_layout">
+
+        <h2 style="text-align:center;">Student Leave Request Report</h2>
+
+        <p>
+          <strong>Printed Date:</strong>
+          <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </p>
+
+        <!-- Dynamic Header Information -->
+        <t t-if="student_id">
+          <p><strong>Student:</strong> <span t-esc="env['hostel.student'].browse(student_id).name"/></p>
+        </t>
+        <t t-if="room_id">
+          <p><strong>Room:</strong> <span t-esc="env['hostel.room'].browse(room_id).number"/></p>
+        </t>
+        <t t-if="leave_date">
+          <p><strong>Leave Date From:</strong> <span t-esc="leave_date"/></p>
+        </t>
+        <t t-if="arrival_date">
+          <p><strong>Arrival Date To:</strong> <span t-esc="arrival_date"/></p>
+        </t>
+
+        <table class="table" style="width: 100%; margin-top: 20px;">
+          <thead>
+            <tr>
+              <th><strong>SL.No</strong></th>
+              <t t-if="not student_id"><th><strong>Student</strong></th></t>
+              <t t-if="not room_id"><th><strong>Room</strong></th></t>
+              <t t-if="not leave_date"><th><strong>Start Date</strong></th></t>
+              <t t-if="not arrival_date"><th><strong>Arrival Date</strong></th></t>
+              <th><strong>Duration</strong></th>
+            </tr>
+          </thead>
+          <tbody>
+            <t t-set="counter" t-value="0"/>
+            <t t-foreach="data_lines" t-as="line">
+              <t t-set="counter" t-value="counter + 1"/>
+              <tr>
+                <td><t t-esc="counter"/></td>
+                <t t-if="not student_id">
+                  <td><t t-esc="line['student']"/></td>
+                </t>
+                <t t-if="not room_id">
+                  <td><t t-esc="line['room'] or ''"/></td>
+                </t>
+                <t t-if="not leave_date"><td><t t-esc="line['start_date']"/></td></t>
+                <t t-if="not arrival_date"><td><t t-esc="line['arrival_date']"/></td></t>
+                <td><t t-esc="line['duration']"/> Day(s)</td>
+              </tr>
+            </t>
+          </tbody>
+        </table>
+      </t>
+    </t>
+ </template>
+
+
+</odoo>
