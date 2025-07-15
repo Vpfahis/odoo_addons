@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
 
-    <!-- Extend ControlButtons to add calculator button -->
     <t t-name="point_of_sale.ControlButtons" t-inherit="point_of_sale.ControlButtons" t-inherit-mode="extension">
         <xpath expr="//OrderlineNoteButton" position="after">
-            <!-- Only show calculator button if enabled in POS config -->
             <t t-if="pos.config.enable_calculator">
                 <button class="btn btn-light me-2 btn-lg calculator-control-btn" t-on-click="() => this.onClickCalculator()">
                     <i class="fa fa-calculator me-1" role="img" aria-label="Calculator" title="Calculator"/>
                     Calculator
                 </button>
-
-                <!-- Add calculator widget right after the button -->
                 <CalculatorWidget t-if="calculatorState.showCalculator" onClose="() => this.onCloseCalculator()"/>
             </t>
         </xpath>
