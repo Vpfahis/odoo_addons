@@ -93,8 +93,7 @@ export class CalculatorWidget extends Component {
             this.state.expression = "";
             this.state.showResult = true;
         }
-}
-
+    }
 
     copyToClipboard() {
         navigator.clipboard.writeText(this.state.display);
