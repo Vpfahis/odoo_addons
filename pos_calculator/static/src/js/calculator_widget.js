@@ -75,7 +75,10 @@ export class CalculatorWidget extends Component {
 
     equals() {
         try {
-            const result = eval(this.state.expression);
+            let expression = this.state.expression
+                .replace(/×/g, '*')
+                .replace(/÷/g, '/');
+            const result = eval(expression);
 
             if (!isFinite(result)) {
                 this.state.display = "ERROR";
