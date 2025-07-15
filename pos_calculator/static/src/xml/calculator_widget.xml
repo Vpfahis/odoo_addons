@@ -25,6 +25,7 @@
                 <div class="calculator-header">
                     <h4>
                         <i class="fa fa-calculator"></i>
+                        Calculator
                     </h4>
                     <button class="btn btn-sm btn-secondary calculator-close" t-on-click="closeCalculator">
                         <i class="fa fa-times"></i>
