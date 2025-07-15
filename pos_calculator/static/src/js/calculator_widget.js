@@ -2,8 +2,6 @@
 
 import { Component, useState } from "@odoo/owl";
 import { usePos } from "@point_of_sale/app/store/pos_hook";
-import { useService } from "@web/core/utils/hooks";
-import { _t } from "@web/core/l10n/translation";
 import { patch } from "@web/core/utils/patch";
 import { ControlButtons } from "@point_of_sale/app/screens/product_screen/control_buttons/control_buttons";
 
@@ -78,13 +76,18 @@ export class CalculatorWidget extends Component {
 
     equals() {
         try {
+
+            if (!this.state.expression.trim()) {
+                return;
+            }
+
             let expression = this.state.expression
                 .replace(/×/g, '*')
                 .replace(/÷/g, '/');
             const result = eval(expression);
 
             if (!isFinite(result)) {
-                this.state.display = "ERROR";
+                this.state.display = "Invalid";
                 this.state.expression = "";
             } else {
                 // Round to 8 decimal places max, and remove trailing zeros
@@ -95,7 +98,7 @@ export class CalculatorWidget extends Component {
 
             this.state.showResult = true;
         } catch (e) {
-            this.state.display = "ERROR";
+            this.state.display = "Invalid";
             this.state.expression = "";
             this.state.showResult = true;
         }

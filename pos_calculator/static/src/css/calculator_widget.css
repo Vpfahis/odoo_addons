@@ -4,12 +4,6 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    transition: all 0.2s ease;
-}
-
-.calculator-control-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .calculator-control-btn:active {
@@ -42,7 +36,6 @@
     width: 350px;
     max-width: 90vw;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    animation: fadeIn 0.1s ease;
 }
 
 /* Calculator Header */
@@ -76,7 +69,7 @@
     text-align: right;
     background-color: #f8f9fa;
     border: 2px solid #dee2e6;
-    border-radius: 4px;
+    border-radius: 10px;
     padding: 10px;
     font-weight: bold;
 }
@@ -102,11 +95,6 @@
     transition: all 0.2s ease;
 }
 
-.calculator-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
 .calculator-btn:active {
     transform: translateY(0);
 }
@@ -122,17 +110,9 @@
     color: #333;
 }
 
-.calculator-btn.btn-light:hover {
-    background-color: #e9ecef;
-}
-
 .calculator-btn.btn-info {
     background-color: #17a2b8;
     border-color: #17a2b8;
-}
-
-.calculator-btn.btn-info:hover {
-    background-color: #138496;
 }
 
 .calculator-btn.btn-success {
@@ -140,53 +120,11 @@
     border-color: #28a745;
 }
 
-.calculator-btn.btn-success:hover {
-    background-color: #218838;
-}
-
 .calculator-btn.btn-danger {
     background-color: #dc3545;
     border-color: #dc3545;
 }
 
-.calculator-btn.btn-danger:hover {
-    background-color: #c82333;
-}
-
 .calculator-btn.btn-secondary {
     background-color: #dee2e6;
-}
-
-.calculator-btn.btn-secondary:hover {
-    background-color: #5a6268;
-}
-
-/* Error State */
-.calculator-screen[value="ERROR"] {
-    color: #dc3545;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .calculator-container {
-        width: 300px;
-        padding: 15px;
-    }
-
-    .calculator-btn {
-        height: 45px;
-        font-size: 16px;
-    }
-
-    .calculator-screen {
-        font-size: 20px;
-    }
-}
-
-/* Animation */
-@keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.8); }
-    to { opacity: 1; transform: scale(1); }
 }
