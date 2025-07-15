@@ -1,17 +1,16 @@
 /** @odoo-module **/
-
 import { Component, useState } from "@odoo/owl";
 import { usePos } from "@point_of_sale/app/store/pos_hook";
+import { useService } from "@web/core/utils/hooks";
 import { patch } from "@web/core/utils/patch";
 import { ControlButtons } from "@point_of_sale/app/screens/product_screen/control_buttons/control_buttons";
+import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 
-export class CalculatorWidget extends Component {
-    static template = "calculator_in_pos.CalculatorWidget";
-    static props = {
-        onClose: Function,
-    };
+export class CalculatorDialog extends ConfirmationDialog {
+    static template = "calculator_in_pos.CalculatorDialog";
 
     setup() {
+        super.setup();
         this.pos = usePos();
         this.state = useState({
             display: "0",
@@ -63,7 +62,6 @@ export class CalculatorWidget extends Component {
             this.state.display = this.state.expression;
             this.state.showResult = false;
         } else {
-            // Only add operator if last character isn't already one
             const lastChar = this.state.expression.slice(-1);
             if ("+-*/".includes(lastChar)) {
                 this.state.expression = this.state.expression.slice(0, -1) + op;
@@ -76,11 +74,9 @@ export class CalculatorWidget extends Component {
 
     equals() {
         try {
-
             if (!this.state.expression.trim()) {
                 return;
             }
-
             let expression = this.state.expression
                 .replace(/×/g, '*')
                 .replace(/÷/g, '/');
@@ -90,7 +86,6 @@ export class CalculatorWidget extends Component {
                 this.state.display = "Invalid";
                 this.state.expression = "";
             } else {
-                // Round to 8 decimal places max, and remove trailing zeros
                 const rounded = parseFloat(result.toFixed(8));
                 this.state.display = String(rounded);
                 this.state.expression = String(rounded);
@@ -104,35 +99,29 @@ export class CalculatorWidget extends Component {
         }
     }
 
-    copyToClipboard() {
-        navigator.clipboard.writeText(this.state.display);
+    onConfirm() {
+        this.props.close();
     }
 
-    closeCalculator() {
-        this.props.onClose();
-    }
 }
 
-// Patch the ControlButtons to include the calculator button
 patch(ControlButtons.prototype, {
     setup() {
         super.setup();
-        this.calculatorState = useState({
-            showCalculator: false
-        });
+        this.dialog = useService("dialog");
     },
 
     onClickCalculator() {
-        this.calculatorState.showCalculator = !this.calculatorState.showCalculator;
-    },
-
-    onCloseCalculator() {
-        this.calculatorState.showCalculator = false;
+        this.dialog.add(CalculatorDialog, {
+            title: ("Calculator"),
+            body: ("Use the calculator below:"),
+            confirm: () => {},
+            cancel: () => {},
+        });
     }
 });
 
-// Add the calculator component to ControlButtons
 ControlButtons.components = {
     ...ControlButtons.components,
-    CalculatorWidget
+    CalculatorDialog
 };

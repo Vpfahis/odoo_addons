@@ -8,82 +8,59 @@
                     <i class="fa fa-calculator me-1" role="img" aria-label="Calculator" title="Calculator"/>
                     Calculator
                 </button>
-                <CalculatorWidget t-if="calculatorState.showCalculator" onClose="() => this.onCloseCalculator()"/>
             </t>
         </xpath>
     </t>
 
-    <!-- Main Calculator Widget Template -->
-    <t t-name="calculator_in_pos.CalculatorWidget">
-        <div class="calculator-overlay">
-            <div class="calculator-container">
-                <!-- Header -->
-                <div class="calculator-header">
-                    <h4>
-                        <i class="fa fa-calculator"></i>
-                        Calculator
-                    </h4>
-                    <button class="btn btn-sm btn-secondary calculator-close" t-on-click="closeCalculator">
-                        <i class="fa fa-times"></i>
-                    </button>
-                </div>
-
-                <!-- Display -->
-                <div class="calculator-display">
-                    <!-- Operation History -->
-<!--                    <div class="calculator-history" t-if="state.operationHistory">-->
-<!--                        <small class="text-muted" t-esc="state.operationHistory"/>-->
-<!--                    </div>-->
-
-                    <!-- Main Display -->
-                    <input type="text" class="form-control calculator-screen" t-att-value="state.display" readonly="readonly"/>
-<!--                    <button class="btn btn-sm btn-info calculator-copy" t-on-click="copyToClipboard" title="Copy to clipboard">-->
-<!--                        <i class="fa fa-copy"></i>-->
-<!--                    </button>-->
-                </div>
-
-                <!-- Button Grid -->
-                <div class="calculator-buttons">
-                    <!-- Row 1 -->
-                    <div class="calculator-row">
-                        <button class="btn btn-danger calculator-btn" t-on-click="clear">Clear</button>
-                        <button class="btn btn-secondary calculator-btn" t-on-click="backspace">⌫</button>
-                        <button class="btn btn-info calculator-btn" t-on-click="() => this.performOperation('÷')">÷</button>
+    <t t-name="calculator_in_pos.CalculatorDialog">
+        <Dialog title="'Calculator'" size="'md'">
+            <div class="calculator-dialog-content">
+                <div class="calculator-container">
+                    <!-- Display Screen -->
+                    <div class="calculator-display">
+                        <input type="text"
+                               class="form-control calculator-screen text-end"
+                               t-att-value="state.display"
+                               readonly="readonly"/>
                     </div>
+
+                    <!-- Button Grid -->
+                    <div class="calculator-buttons">
+                    <!-- Row 1 -->
+                    <button class="btn btn-danger calculator-btn" t-on-click="clear">CE</button>
+                    <button class="btn btn-secondary calculator-btn" t-on-click="backspace">⌫</button>
+                    <button class="btn btn-info calculator-btn" t-on-click="() => this.performOperation('÷')">÷</button>
+                    <button class="btn btn-info calculator-btn" t-on-click="() => this.performOperation('×')">×</button>
 
                     <!-- Row 2 -->
-                    <div class="calculator-row">
-                        <button class="btn btn-light calculator-btn" t-on-click="() => this.inputNumber(7)">7</button>
-                        <button class="btn btn-light calculator-btn" t-on-click="() => this.inputNumber(8)">8</button>
-                        <button class="btn btn-light calculator-btn" t-on-click="() => this.inputNumber(9)">9</button>
-                        <button class="btn btn-info calculator-btn" t-on-click="() => this.performOperation('×')">×</button>
-                    </div>
+                    <button class="btn btn-light calculator-btn" t-on-click="() => this.inputNumber(7)">7</button>
+                    <button class="btn btn-light calculator-btn" t-on-click="() => this.inputNumber(8)">8</button>
+                    <button class="btn btn-light calculator-btn" t-on-click="() => this.inputNumber(9)">9</button>
+                    <button class="btn btn-info calculator-btn" t-on-click="() => this.performOperation('-')">-</button>
 
                     <!-- Row 3 -->
-                    <div class="calculator-row">
-                        <button class="btn btn-light calculator-btn" t-on-click="() => this.inputNumber(4)">4</button>
-                        <button class="btn btn-light calculator-btn" t-on-click="() => this.inputNumber(5)">5</button>
-                        <button class="btn btn-light calculator-btn" t-on-click="() => this.inputNumber(6)">6</button>
-                        <button class="btn btn-info calculator-btn" t-on-click="() => this.performOperation('-')">-</button>
-                    </div>
+                    <button class="btn btn-light calculator-btn" t-on-click="() => this.inputNumber(4)">4</button>
+                    <button class="btn btn-light calculator-btn" t-on-click="() => this.inputNumber(5)">5</button>
+                    <button class="btn btn-light calculator-btn" t-on-click="() => this.inputNumber(6)">6</button>
+                    <button class="btn btn-info calculator-btn" t-on-click="() => this.performOperation('+')">+</button>
 
                     <!-- Row 4 -->
-                    <div class="calculator-row">
-                        <button class="btn btn-light calculator-btn" t-on-click="() => this.inputNumber(1)">1</button>
-                        <button class="btn btn-light calculator-btn" t-on-click="() => this.inputNumber(2)">2</button>
-                        <button class="btn btn-light calculator-btn" t-on-click="() => this.inputNumber(3)">3</button>
-                        <button class="btn btn-info calculator-btn" t-on-click="() => this.performOperation('+')">+</button>
-                    </div>
+                    <button class="btn btn-light calculator-btn" t-on-click="() => this.inputNumber(1)">1</button>
+                    <button class="btn btn-light calculator-btn" t-on-click="() => this.inputNumber(2)">2</button>
+                    <button class="btn btn-light calculator-btn" t-on-click="() => this.inputNumber(3)">3</button>
+                    <button class="btn btn-success calculator-btn" t-on-click="equals" style="grid-row: span 2; height: 118px;">=</button>
 
                     <!-- Row 5 -->
-                    <div class="calculator-row">
-                        <button class="btn btn-light calculator-btn calculator-zero" t-on-click="() => this.inputNumber(0)">0</button>
-                        <button class="btn btn-light calculator-btn" t-on-click="inputDecimal">.</button>
-                        <button class="btn btn-success calculator-btn" t-on-click="equals">=</button>
+                    <button class="btn btn-light calculator-btn calculator-zero" t-on-click="() => this.inputNumber(0)">0</button>
+                    <button class="btn btn-light calculator-btn" t-on-click="inputDecimal">.</button>
                     </div>
                 </div>
             </div>
-        </div>
+
+            <t t-set-slot="footer">
+                <button class="btn btn-primary" t-on-click="onConfirm">OK</button>
+            </t>
+        </Dialog>
     </t>
 
 </templates>
