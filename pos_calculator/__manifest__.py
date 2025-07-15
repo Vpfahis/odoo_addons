@@ -2,7 +2,7 @@
     'name': "POS Calculator",
     'version': '18.0.1.0.0',
     'depends': ['base','web','point_of_sale'],
-    'author': "Fahis",
+    'author': "FahisVP",
     'category': 'My Category',
     'description': """
     A module to add calculator to the POS screen
