@@ -5,7 +5,7 @@
     'author': "Fahis",
     'category': 'My Category',
     'description': """
-    A module to add calculator to the POS screen.
+    A module to add calculator to the POS screen..
     """,
     'data': [
         'views/pos_config_views.xml',
