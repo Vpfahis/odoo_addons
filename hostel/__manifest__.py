@@ -17,7 +17,7 @@
         'data/hostel_facility_data.xml',
         'data/hostel_product_demo.xml',
         'data/ir_cron_data.xml',
-        'data/automated_action.xml',
+        # 'data/automated_action.xml',
         'wizard/student_report_wizard_views.xml',
         'wizard/leave_report_wizard_views.xml',
         'views/hostel_room_view.xml',
