@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="add_cart_product" inherit_id="website_sale.products_item" name="Add to Cart with Decimal Quantity">
+        <xpath expr="//div[hasclass('o_wsale_product_btn')]" position="inside">
+            <div class="css_quantity input-group me-2 mb-2 align-middle product-card-qty" style="width: 120px;">
+                <button type="button" class="btn btn-outline-secondary js_add_cart_json px-2 py-1"
+                        aria-label="Decrease quantity" title="Decrease" data-type="minus">
+                    <i class="fa fa-minus"/>
+                </button>
+                <input type="number"
+                       class="form-control quantity text-center js_quantity product-card-quantity"
+                       name="add_qty"
+                       value="1.0"
+                       min="1.0"
+                       step="0.1"
+                       data-product-id="${product.id}"
+                       data-min="0"
+                       data-max="Infinity"
+                       style="border-left: 0; border-right: 0; font-size: 14px;"/>
+                <button type="button" class="btn btn-outline-secondary js_add_cart_json px-2 py-1"
+                        aria-label="Increase quantity" title="Increase" data-type="plus">
+                    <i class="fa fa-plus"/>
+                </button>
+            </div>
+        </xpath>
+    </template>
+</odoo>
